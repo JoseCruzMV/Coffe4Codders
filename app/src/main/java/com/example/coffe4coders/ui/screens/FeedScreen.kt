@@ -13,6 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.coffe4coders.R
 import com.example.coffe4coders.ui.components.BodyText
 import com.example.coffe4coders.ui.components.CountryISO
@@ -21,7 +23,7 @@ import com.example.coffe4coders.ui.components.TitleText
 import com.example.coffe4coders.ui.theme.Coffe4CodersTheme
 
 @Composable
-fun FeedScreen() {
+fun FeedScreen(navController: NavController) {
     val list = listOf(
         CountryISO.COL, CountryISO.BRA, CountryISO.NIC, CountryISO.CRI
     )
@@ -48,7 +50,11 @@ fun FeedScreen() {
                         price = 35.0,
                         currency = "USD",
                         country = country
-                    )
+                    ) {
+                        navController.navigate(route = "Detail") {
+                            launchSingleTop = true
+                        }
+                    }
                 }
             }
         }
@@ -60,5 +66,6 @@ fun FeedScreen() {
 )
 @Composable
 fun FeedScreenPreview() {
-    FeedScreen()
+    val navController = rememberNavController()
+    FeedScreen(navController = navController)
 }

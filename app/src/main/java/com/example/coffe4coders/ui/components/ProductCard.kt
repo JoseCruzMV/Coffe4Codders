@@ -60,12 +60,15 @@ fun ProductCard(
     price: Double,
     currency: String,
     country: CountryISO,
+    selected: () -> Unit,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable {}
+            .clickable {
+                selected()
+            }
             .size(480.dp),
         elevation = 10.dp,
         shape = MaterialTheme.shapes.small,
@@ -125,6 +128,6 @@ fun ProductCardPreview() {
             price = 35.0,
             currency = "USD",
             country = CountryISO.BRA,
-        )
+        ) {}
     }
 }
