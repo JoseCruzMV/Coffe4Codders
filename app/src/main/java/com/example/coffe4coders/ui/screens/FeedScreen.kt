@@ -45,13 +45,13 @@ fun FeedScreen(navController: NavController) {
                 }
                 items(list) { country ->
                     ProductCard(
-                        name = stringResource(id = R.string.card_title),
+                        name = country.getCountryName(),
                         summary = stringResource(id = R.string.card_description),
                         price = 35.0,
                         currency = "USD",
                         country = country
                     ) {
-                        navController.navigate(route = "Detail") {
+                        navController.navigate(route = "Detail/${country.iso}") {
                             launchSingleTop = true
                         }
                     }

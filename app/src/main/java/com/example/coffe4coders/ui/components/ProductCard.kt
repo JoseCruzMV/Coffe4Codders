@@ -27,6 +27,15 @@ enum class CountryISO(val iso: String) {
     CRI("CRI"),
     NIC("NIC");
 
+    fun getCountryName(): String{
+        return when(this){
+            COL -> "Colombia"
+            BRA -> "Brazil"
+            CRI -> "Costa Rica"
+            NIC -> "Nicaragua"
+        }
+    }
+
     fun getBackgroundImage(): Int {
         return when(this){
             COL -> R.drawable.co
@@ -86,7 +95,7 @@ fun ProductCard(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = name,
+                    text = "Coffee from $name",
                     style = MaterialTheme.typography.h4,
                 )
                 Text(
