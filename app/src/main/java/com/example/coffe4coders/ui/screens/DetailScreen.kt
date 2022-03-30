@@ -75,7 +75,7 @@ fun DetailScreen(
                         CustomButton(
                             label = "Next"
                         ) {
-                            navController.navigate("Checkout") {
+                            navController.navigate("Checkout/${countryISO.iso}") {
                                 launchSingleTop = true
                             }
                         }
