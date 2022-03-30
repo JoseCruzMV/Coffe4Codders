@@ -15,18 +15,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.coffe4coders.models.Product
 import com.example.coffe4coders.ui.components.*
 import com.example.coffe4coders.ui.theme.Coffe4CodersTheme
+import com.example.coffe4coders.utilities.MockDataProvider
 
 @Composable
 fun DetailScreen(
     navController: NavController,
-    countryISO: CountryISO
+    product: Product
 ) {
+    val countryISO = CountryISO.valueOf(product.countryISO)
     Scaffold(
         topBar = {
             CustomAppBar(
@@ -56,26 +58,26 @@ fun DetailScreen(
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    TitleText(title = "Coffee")
+                    TitleText(title = product.name)
                     Text(
-                        text = LoremIpsum(8).values.joinToString(" "),
+                        text = product.summary,
                         style = MaterialTheme.typography.caption
                     )
                     Spacer(modifier = Modifier.height(24.dp))
-                    BodyText(body = LoremIpsum(20).values.joinToString(" "))
+                    BodyText(body = product.description)
                     Spacer(modifier = Modifier.height(24.dp))
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
-                            text = "$35 USD",
+                            text = "$${product.price} ${product.currency}",
                             style = MaterialTheme.typography.h5,
                             textAlign = TextAlign.End
                         )
                         CustomButton(
                             label = "Next"
                         ) {
-                            navController.navigate("Checkout/${countryISO.iso}") {
+                            navController.navigate("Checkout/${product.id}") {
                                 launchSingleTop = true
                             }
                         }
@@ -92,10 +94,12 @@ fun DetailScreen(
 @Composable
 fun DetailScreenPreview() {
     val navController = rememberNavController()
+    val product = MockDataProvider.getProductById(0)!!
+
     Coffe4CodersTheme {
         DetailScreen(
             navController = navController,
-            countryISO = CountryISO.BRA
+            product = product
         )
     }
 }

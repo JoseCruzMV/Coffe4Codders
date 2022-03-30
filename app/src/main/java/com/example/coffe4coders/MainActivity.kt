@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.coffe4coders.ui.components.CountryISO
 import com.example.coffe4coders.ui.screens.CheckoutScreen
 import com.example.coffe4coders.ui.screens.DetailScreen
 import com.example.coffe4coders.ui.screens.FeedScreen
 import com.example.coffe4coders.ui.theme.Coffe4CodersTheme
+import com.example.coffe4coders.utilities.MockDataProvider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,20 +35,22 @@ fun NavigationHost() {
                 composable(route = "Feed") {
                     FeedScreen(navController = navController)
                 }
-                composable(route = "Detail/{countryIso}") { backStackEntry ->
-                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
-                    val countryISO = CountryISO.valueOf(countryIsoString)
+                composable(route = "Detail/{productId}") { backStackEntry ->
+                    val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+                    val productId = productIdString.toInt()
+                    val product = MockDataProvider.getProductById(productId)!!
                     DetailScreen(
                         navController = navController,
-                        countryISO = countryISO
+                        product = product
                     )
                 }
-                composable(route = "Checkout/{countryIso}") { backStackEntry ->
-                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "BRA"
-                    val countryISO = CountryISO.valueOf(countryIsoString)
+                composable(route = "Checkout/{productId}") { backStackEntry ->
+                    val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+                    val productId = productIdString.toInt()
+                    val product = MockDataProvider.getProductById(productId)!!
                     CheckoutScreen(
                         navController = navController,
-                        countryISO = countryISO
+                        product = product
                     )
 
                 }

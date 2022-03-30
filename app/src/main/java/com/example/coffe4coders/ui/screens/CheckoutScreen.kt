@@ -12,17 +12,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.coffe4coders.models.Product
 import com.example.coffe4coders.ui.components.*
 import com.example.coffe4coders.ui.theme.Coffe4CodersTheme
+import com.example.coffe4coders.utilities.MockDataProvider
 
 @Composable
 fun CheckoutScreen(
     navController: NavController,
-    countryISO: CountryISO,
+    product: Product,
 ) {
     val cities = listOf(
         "Mexico City, Mexico",
@@ -40,7 +41,7 @@ fun CheckoutScreen(
             CustomAppBar(
                 navigationIcon = Icons.Filled.ArrowBack,
                 navigationAction = {
-                    navController.navigate("Detail/${countryISO.iso}")
+                    navController.navigate("Detail/${product.id}")
                 }
             )
         },
@@ -49,11 +50,7 @@ fun CheckoutScreen(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 ProductCard(
-                    name = "Coffee",
-                    summary = LoremIpsum(10).values.joinToString(" "),
-                    price = 35.0,
-                    currency = "USD",
-                    country = countryISO,
+                    product = product,
                     selected = {}
                 )
                 Column(
@@ -95,7 +92,7 @@ fun CheckoutScreen(
                                 style = MaterialTheme.typography.caption
                             )
                             Text(
-                                text = "$35.0 USD",
+                                text = "$${product.price} ${product.currency}",
                                 style = MaterialTheme.typography.body2,
                                 textAlign = TextAlign.End,
                                 modifier = Modifier.fillMaxWidth(),
@@ -107,7 +104,7 @@ fun CheckoutScreen(
                                 style = MaterialTheme.typography.caption
                             )
                             Text(
-                                text = "$10.0 USD",
+                                text = "$10.0 ${product.currency}",
                                 style = MaterialTheme.typography.body2,
                                 textAlign = TextAlign.End,
                                 modifier = Modifier.fillMaxWidth(),
@@ -119,7 +116,7 @@ fun CheckoutScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
-                            text = "$45.0 USD",
+                            text = "$${product.price + 10} ${product.currency}",
                             style = MaterialTheme.typography.h5,
                             textAlign = TextAlign.Start
                         )
@@ -141,10 +138,12 @@ fun CheckoutScreen(
 @Composable
 fun CheckoutScreenPreview() {
     val navController = rememberNavController()
+    val product = MockDataProvider.getProductById(0)!!
+
     Coffe4CodersTheme {
         CheckoutScreen(
             navController = navController,
-            countryISO = CountryISO.BRA
+            product = product
         )
     }
 }

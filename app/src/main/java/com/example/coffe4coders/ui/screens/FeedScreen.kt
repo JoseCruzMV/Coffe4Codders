@@ -10,25 +10,22 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.coffe4coders.R
 import com.example.coffe4coders.ui.components.*
 import com.example.coffe4coders.ui.theme.Coffe4CodersTheme
+import com.example.coffe4coders.utilities.MockDataProvider
 
 @Composable
 fun FeedScreen(navController: NavController) {
-    val list = listOf(
-        CountryISO.COL, CountryISO.BRA, CountryISO.NIC, CountryISO.CRI
-    )
-    Coffe4CodersTheme() {
+    val list = MockDataProvider.listOfProduct()
+    Coffe4CodersTheme {
         Scaffold(
             topBar = {
-                CustomAppBar(title = "Coffe4Codders")
+                CustomAppBar(title = "Coffee4Coders")
             },
             content = {
                 Surface(
@@ -45,15 +42,11 @@ fun FeedScreen(navController: NavController) {
                                 BodyText(body = LoremIpsum(20).values.joinToString(""))
                             }
                         }
-                        items(list) { country ->
+                        items(list) { product ->
                             ProductCard(
-                                name = country.getCountryName(),
-                                summary = stringResource(id = R.string.card_description),
-                                price = 35.0,
-                                currency = "USD",
-                                country = country
+                                product = product
                             ) {
-                                navController.navigate(route = "Detail/${country.iso}") {
+                                navController.navigate(route = "Detail/${product.id}") {
                                     launchSingleTop = true
                                 }
                             }
