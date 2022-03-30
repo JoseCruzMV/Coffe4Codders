@@ -14,7 +14,7 @@ fun CustomAppBar(
     navigationIcon: ImageVector? = null,
     navigationAction: NavigationAction? = null, // Type alias from () -> Unit
 ) {
-    val titleText = title ?: ""
+    val titleText = title ?: "Coffee4Coders"
 
     if (navigationIcon != null && navigationAction != null)
     {

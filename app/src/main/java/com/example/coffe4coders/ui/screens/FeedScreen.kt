@@ -1,5 +1,6 @@
 package com.example.coffe4coders.ui.screens
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -63,6 +64,16 @@ fun FeedScreen(navController: NavController) {
 )
 @Composable
 fun FeedScreenPreview() {
+    val navController = rememberNavController()
+    FeedScreen(navController = navController)
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES
+)
+@Composable
+fun FeedScreenPreviewDark() {
     val navController = rememberNavController()
     FeedScreen(navController = navController)
 }

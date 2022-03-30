@@ -35,6 +35,7 @@ fun CheckoutScreen(
     var phone by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
     var city by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = {
@@ -46,6 +47,15 @@ fun CheckoutScreen(
             )
         },
         content = {
+            Alert(
+                title = "Congrats",
+                message = message
+            ) {
+                navController.navigate("Feed") {
+                    launchSingleTop = true
+                    popUpTo("Feed")
+                }
+            }
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
@@ -123,7 +133,7 @@ fun CheckoutScreen(
                         CustomButton(
                             label = "Complete deal"
                         ) {
-
+                            message = "Deal done"
                         }
                     }
                 }
